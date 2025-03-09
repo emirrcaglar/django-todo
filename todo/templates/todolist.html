@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myglobal.css' %}">
+    <title>Todo List</title>
+</head>
+
+<body>
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Todo List</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <form action="/todo/" method="post" class="form-center">{% csrf_token %}
+                            <textarea id="enter-todo" name="content" rows="2" cols="25"></textarea>
+                            <!--
+                            <p>
+                            </p>
+                            <input type="" class="form-control" name="content" id="todo" placeholder="Enter todo">-->
+                        <td>
+                            <button type="submit" class="btn btn-primary">Add Item</button>
+                        </td>
+                    </form>
+                    </td>
+                </tr>
+                {% for item in all_items %}
+                <tr>
+                    <td>
+                        <p>{{ item.content }}</p>
+                    </td>
+                    <td>
+                        <a href="{% url 'EditTodo' item.id %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'DeleteTodo' item.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myglobal.css' %}">
+    <title>Edit Item</title>
+</head>
+<body>
+    <div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Edit Item</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in all_items %}
+                {% if edit_item and edit_item.id == item.id %}
+                    <form method="post" action="{% url 'UpdateTodoItem' item.id %}">
+                        {% csrf_token %}     
+                        <tr>
+                            <td>
+                                <textarea id="enter-todo" name="content" rows="2" cols="25">{{ item.content }}</textarea>
+                                <!--<input type="text" class="form-control" name="content" value="{{ item.content }}" placeholder="Update item">-->
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </td>
+                            </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            <p>{{ item.content }}</p>
+                        </td>
+                        <td>    
+                            <a href="{% url 'EditTodo' item.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'DeleteTodo' item.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+                        </tr>
+                        {% endif %} 
+                        {% endfor %}
+                    </tbody>
+                </div>
+            </table>
+        </body>
+    <a href="{% url 'todolist' %}">back</a>
+</html>
